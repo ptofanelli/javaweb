@@ -1,0 +1,65 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	contentType="text/html" renderKitId="PRIMEFACES_MOBILE">
+
+	<!-- MODULO DE FORNECEDORES -->
+	<ui:composition>
+		<pm:view id="viewFornecedoresResumo">
+			<pm:header title="Fornecedores" fixed="true" swatch="b">
+				<f:facet name="left">
+					<p:commandButton value="Menu" iconPos="left" icon="back"
+						action="pm:main?reverse=true" />
+				</f:facet>
+				<f:facet name="right">
+					<p:commandButton value="Filtro" iconPos="left" icon="search"
+						onclick="widgetDialogFinanceiroResumo.show();" />
+				</f:facet>
+
+				<pm:navBar>
+					<p:button value="Resumo" icon="home" href="#viewFornecedoresResumo"
+						styleClass="ui-btn-active" />
+					<p:button value="Graficos" icon="info" href="#viewFornecedoresGraficos" />
+					<p:button value="Indicadores" icon="star"
+						href="#viewFornecedoresIndicadores" />
+				</pm:navBar>
+			</pm:header>
+			<pm:content>
+				<h:form id="formFornecedoresListaFornecedores">
+					<p:dialog id="dialogFornecedoresDetalhe" header="Info"
+						widgetVar="widgetDialogFornecedoresDetalhe" showEffect="fade"
+						hideEffect="fade" closable="false" modal="true" height="100">
+
+						<p:dataList id="dlgFornDataList">
+							<p:outputLabel value="#{entidadeController.fornecedorSelecionado.nome}" />
+							<p:outputLabel value="#{entidadeController.fornecedorSelecionado.telefone}" rendered="#{not empty entidadeController.fornecedorSelecionado.telefone}" />
+							<p:outputLabel value="#{entidadeController.fornecedorSelecionado.email}"  rendered="#{not empty entidadeController.fornecedorSelecionado.email}"/>
+						</p:dataList>
+						<p:commandButton value="Fechar" iconPos="left" icon="check"
+							onclick="widgetDialogFornecedoresDetalhe.hide();" />
+					</p:dialog>
+
+					<p:dataList id="fornecedoresDataList" value="#{entidadeController.fornecedores}" var="fornecedor">
+						<f:attribute name="filter" value="true" />
+						<f:attribute name="autoDividers" value="true" />
+						<p:column>
+							<p:commandLink update=":formFornecedoresListaFornecedores:dlgFornDataList" oncomplete="widgetDialogFornecedoresDetalhe.show();" >
+								<f:setPropertyActionListener value="#{fornecedor}" target="#{entidadeController.fornecedorSelecionado}" />
+								<f:attribute name="icon" value="info" />
+								<h:outputText value="#{fornecedor.nome}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataList>
+				</h:form>
+			</pm:content>
+			<pm:footer fixed="true" swatch="b">
+			&#169; 2013 i9Virtual
+			</pm:footer>
+		</pm:view>
+	</ui:composition>
+
+</f:view>

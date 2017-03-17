@@ -1,0 +1,90 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	contentType="text/html" renderKitId="PRIMEFACES_MOBILE">
+
+	<!-- MENU PRINCIPAL -->
+	<ui:composition>
+
+		<pm:view id="main" swatch="d">
+
+			<pm:header title="Principal" fixed="true" swatch="b">
+				<f:facet name="left">
+					<p:commandButton value="Info" action="maps" iconPos="left"
+						icon="info" />
+				</f:facet>
+				<f:facet name="right">
+					<p:commandButton action="pm:principalConfiguracoes" value="Conf"
+						iconPos="left" icon="gear" />
+				</f:facet>
+			</pm:header>
+			<pm:content>
+				<h:form>
+					<p:dataList type="inset" styleClass="ui-li-custom">
+						<f:facet name="header">Modulos</f:facet>
+						<f:attribute name="icon" value="false" />
+						<h:outputLink value="#viewMenuFinanceiro">Financeiro <h:outputText
+								styleClass="ui-li-count" value="Novo!" />
+						</h:outputLink>
+						<h:outputLink value="#viewComprasResumo">Compras<h:outputText
+								styleClass="ui-li-count" value="Em breve" />
+						</h:outputLink>
+						<p:commandLink action="pm:viewClientesResumo"
+							actionListener="#{entidadeController.carregarClientes}"
+							update=":formClientesListaClientes:clientesDataList">
+						Clientes <h:outputText styleClass="ui-li-count" value="Novo!" />
+						</p:commandLink>
+						<h:outputLink>Faturamento<h:outputText
+								styleClass="ui-li-count" value="Em breve" />
+						</h:outputLink>
+						<p:commandLink action="lists?faces-redirect=true" ajax="false">Orcamento <h:outputText
+								styleClass="ui-li-count" value="Em breve" />
+						</p:commandLink>
+						<p:commandLink action="lists?faces-redirect=true" ajax="false">Producao <h:outputText
+								styleClass="ui-li-count" value="Em breve" />
+						</p:commandLink>
+						<h:outputLink>Fiscal <h:outputText
+								styleClass="ui-li-count" value="Em breve" />
+						</h:outputLink>
+						<p:commandLink action="#{entidadeController.carregarFornecedores}"
+							actionListener="#{entidadeController.carregarFornecedores}"
+							update=":formFornecedoresListaFornecedores:fornecedoresDataList">
+						Fornecedores <h:outputText styleClass="ui-li-count" value="Novo!" />
+						</p:commandLink>
+						<p:separator />
+					</p:dataList>
+				</h:form>
+
+			</pm:content>
+			<pm:footer fixed="true" swatch="b">
+				<p:dialog id="dlgLogOut" header="Sair" widgetVar="wgtLogOut"
+					showEffect="fade" hideEffect="fade" closable="false" modal="true"
+					height="100">
+					<p:panelGrid columns="1" style="margin: 0 auto;">
+						<p:outputLabel value="Deseja sair do Imobby?" />
+					</p:panelGrid>
+					<p:panelGrid columns="2" style="margin: 0 auto;">
+						<p:commandButton value="Sim" action="#{login.logout}"
+							iconPos="left" icon="check" oncomplete="wgtLogOut.hide();" />
+						<p:commandButton value="Nao" iconPos="left" icon="delete"
+							onclick="wgtLogOut.hide();" />
+					</p:panelGrid>
+
+				</p:dialog>
+
+				<p:panelGrid columns="1" style="margin: 0 auto;">
+					<h:graphicImage library="imagens" height="30" width="30"
+						name="logout.png" onclick="wgtLogOut.show();" />
+				</p:panelGrid>
+			</pm:footer>
+
+
+		</pm:view>
+
+	</ui:composition>
+
+</f:view>

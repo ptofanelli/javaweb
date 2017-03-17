@@ -1,0 +1,64 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	contentType="text/html" renderKitId="PRIMEFACES_MOBILE">
+
+	<!-- MODULO FINANCEIRO - TAB DE INDICADORES -->
+	<ui:composition>
+		<pm:view id="viewFinanceiroIndicadores">
+			<pm:header title="Financeiro" fixed="true" swatch="b">
+				<f:facet name="left">
+					<p:commandButton value="Financeiro" iconPos="left" icon="back"
+						action="pm:viewMenuFinanceiro?reverse=true" />
+				</f:facet>
+				<f:facet name="right">
+					<p:commandButton value="Filtro" iconPos="left" icon="search" />
+				</f:facet>
+				<pm:navBar>
+					<p:button value="Resumo" icon="home" href="#viewFinanceiroResumo" />
+					<p:button value="Graficos" icon="info"
+						href="#viewFinanceiroGraficos" />
+					<p:button value="Indicadores" icon="star"
+						href="#viewFinanceiroIndicadores" styleClass="ui-btn-active" />
+				</pm:navBar>
+			</pm:header>
+			<pm:content>
+
+				<pm:navBar>
+					<p:button value="Home" icon="home" href="#main?reverse=true"
+						styleClass="ui-btn-active" />
+					<p:button value="Info" icon="info" href="#main?reverse=true" />
+					<p:button value="Search" icon="search" href="#main?reverse=true" />
+					<p:button value="Favs" icon="star" href="#main?reverse=true" />
+					<p:button value="Setup" icon="gear" href="#main?reverse=true" />
+				</pm:navBar>
+			</pm:content>
+			<pm:footer fixed="true" swatch="b">
+				<p:dialog id="tabIndicadoresDlgLogOut" header="Sair" widgetVar="tabIndicadoresWgtLogOut"
+					showEffect="fade" hideEffect="fade" closable="false" modal="true"
+					height="100">
+					<p:panelGrid columns="1" style="margin: 0 auto;">
+						<p:outputLabel value="Deseja sair do Imobby?" />
+					</p:panelGrid>
+					<p:panelGrid columns="2" style="margin: 0 auto;">
+						<p:commandButton value="Sim" action="#{login.logout}"
+							iconPos="left" icon="check" oncomplete="tabIndicadoresWgtLogOut.hide();" />
+						<p:commandButton value="Nao" iconPos="left" icon="delete"
+							onclick="tabIndicadoresWgtLogOut.hide();" />
+					</p:panelGrid>
+
+				</p:dialog>
+
+				<p:panelGrid columns="1" style="margin: 0 auto;">
+					<h:graphicImage library="imagens" height="30" width="30"
+						name="logout.png" onclick="tabIndicadoresWgtLogOut.show();" />
+				</p:panelGrid>
+			</pm:footer>
+		</pm:view>
+	</ui:composition>
+
+</f:view>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:wc="http://googlecode.com/wickedcharts">
+
+<f:view renderKitId="PRIMEFACES_MOBILE">
+
+	<h:head>
+
+	</h:head>
+
+	<h:body>
+		<!-- LOGIN PAGE -->
+		<pm:page id="login">
+			<pm:header title="Login">
+				<p:commandButton type="button" icon="ui-icon-info" />
+			</pm:header>
+
+			<pm:content>
+				<h:form id="mainForm">
+					<p:panelGrid columns="1" style="display:block; text-align:center">
+						<h:graphicImage id="logoImobby" library="img" name="logo.png" />
+					</p:panelGrid>
+
+					<p:messages id="messages" globalOnly="true" showDetail="true"
+						autoUpdate="true" closable="true" />
+
+					<h:outputLabel for="usuario" value="#{msg.loginLblUsuario}"
+						style="font-weight:bold" />
+					<p:message id="usuarioMensagem" for="usuario" />
+					<p:inputText id="usuario" value="#{login.usuario}" required="true"
+						requiredMessage="#{msg.loginMsgUsuario}" />
+
+					<h:outputLabel for="senha" value="#{msg.loginLblSenha}"
+						style="font-weight:bold" />
+					<p:message id="senhaMensagem" for="senha" />
+					<p:password id="senha" value="#{login.senha}" required="true"
+						requiredMessage="#{msg.loginMsgSenha}" />
+
+					<!--<p:commandButton value="#{msg.loginBtnEntrar}" iconPos="noicon" -->
+					<!-- action="#{login.login()}" update="mainForm" /> -->
+					<p:button value="#{msg.loginBtnEntrar}" iconPos="noicon"
+						outcome="index" />
+
+				</h:form>
+
+				<h:form id="formLang">
+					<p:panelGrid columns="3"
+						style="display:block; text-align:center; width: 100%; ">
+						<p:commandLink action="#{bean.setIdiomaPt}" update=":login:mainForm">
+							<h:graphicImage library="img" height="50" width="50"
+								name="brazil-flag-icon.png" onclick="" />
+						</p:commandLink>
+						<p:commandLink action="#{bean.setIdiomaEn}" update=":login:mainForm">
+							<h:graphicImage library="img" height="50" width="50"
+								name="usa-flag-icon.png" onclick="" />
+						</p:commandLink>
+						<p:commandLink action="#{bean.setIdiomaEs}" update=":login:mainForm">
+							<h:graphicImage library="img" height="50" width="50"
+								name="spain-flag-icon.png" onclick="" />
+						</p:commandLink>
+					</p:panelGrid>
+				</h:form>
+			</pm:content>
+
+			<pm:footer fixed="true">Webvendas &#169; 2015 i9Virtual</pm:footer>
+		</pm:page>
+
+	</h:body>
+
+</f:view>
+
+</html>

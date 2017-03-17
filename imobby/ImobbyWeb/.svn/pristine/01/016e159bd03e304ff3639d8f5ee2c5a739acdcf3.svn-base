@@ -1,0 +1,35 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	contentType="text/html" renderKitId="PRIMEFACES_MOBILE">
+
+
+	<pm:page title="Imobby" loadingMessage="Carregando...">
+	
+		<f:event type="preRenderView" listener="#{login.checkLogin}"/>
+
+		<!-- MENU PRINCIPAL -->
+		<ui:include src="/paginas/principal/menuPrincipal.xhtml" />
+
+		<!-- CONFIGURACOES -->
+		<ui:include src="/paginas/principal/configuracoes.xhtml" />
+
+		<!-- MODULO FINANCEIRO -->
+		<ui:include src="/paginas/financeiro/financeiro.xhtml" />
+
+		<!-- MODULO DE COMPRAS -->
+		<ui:include src="/paginas/compras/compras.xhtml" />
+
+		<!-- MODULO DE CLIENTES -->
+		<ui:include src="/paginas/clientes/clientes.xhtml" />
+
+		<!-- MODULO DE FORNECEDORES -->
+		<ui:include src="/paginas/fornecedores/fornecedores.xhtml" />
+
+	</pm:page>
+
+</f:view>

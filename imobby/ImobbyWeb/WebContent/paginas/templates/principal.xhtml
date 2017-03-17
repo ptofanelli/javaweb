@@ -1,0 +1,28 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	contentType="text/html" renderKitId="PRIMEFACES_MOBILE">
+
+	<pm:page title="#{pageTitle}" loadingMessage="Carregando...">
+	
+		<pm:view id="#{viewId}" swatch="#{viewSwatch}" title="#{viewTitle}">
+
+			<pm:header title="#{headerTitle}" fixed="true" swatch="b">
+				<ui:insert name="header"/>
+			</pm:header>
+			<pm:content>
+				<ui:insert name="content"/>
+			</pm:content>
+			<pm:footer fixed="true" swatch="b">
+			Imobby&#169; 2013 i9Virtual
+			</pm:footer>
+
+		</pm:view>
+
+	</pm:page>
+
+</f:view>

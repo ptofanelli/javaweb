@@ -1,0 +1,77 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	contentType="text/html" renderKitId="PRIMEFACES_MOBILE">
+
+	<!-- MENU FINANCEIRO -->
+	<ui:composition>
+		<pm:view id="viewMenuFinanceiro" swatch="d"
+			title="Imobby - Financeiro">
+			<pm:header title="Financeiro" fixed="true" swatch="b">
+				<f:facet name="left">
+					<p:commandButton value="Principal" iconPos="left" icon="back"
+						action="pm:main?reverse=true" />
+				</f:facet>
+			</pm:header>
+			<pm:content>
+				<h:form>
+					<p:messages id="messages" globalOnly="true" showDetail="true"
+						autoUpdate="true" closable="true" />
+					<p:dataList type="inset" styleClass="ui-li-custom">
+						<f:facet name="header">Menu</f:facet>
+						<f:attribute name="icon" value="false" />
+						<p:commandLink action="#{saldoClienteController.saldoClientes}"
+							actionListener="#{saldoClienteController.saldoClientes}"
+							update=":formFinanceiro :saldoClientesTabGraficosForm"
+							process="@this">
+							<f:ajax/>
+							Saldo Clientes<h:outputText styleClass="ui-li-count" value="Novo!" />
+						</p:commandLink>
+						<h:outputLink>Contas a Pagar <h:outputText
+								styleClass="ui-li-count" value="Em Breve" />
+						</h:outputLink>
+						<h:outputLink>Contas a Receber<h:outputText
+								styleClass="ui-li-count" value="Em breve" />
+						</h:outputLink>
+						<h:outputLink>Fluxo de Caixa <h:outputText
+								styleClass="ui-li-count" value="Em breve" />
+						</h:outputLink>
+						<h:outputLink>Saldo Bancarios<h:outputText
+								styleClass="ui-li-count" value="Em breve" />
+						</h:outputLink>
+						<p:commandLink action="lists?faces-redirect=true" ajax="false">Indicadores <h:outputText
+								styleClass="ui-li-count" value="Em breve" />
+						</p:commandLink>
+						<p:separator />
+					</p:dataList>
+				</h:form>
+				
+			</pm:content>
+			<pm:footer fixed="true" swatch="b">
+				<p:dialog id="menuFinanceiroDlgLogOut" header="Sair"
+					widgetVar="menuFinanceiroWgtLogOut" showEffect="fade"
+					hideEffect="fade" closable="false" modal="true" height="100">
+					<p:panelGrid columns="1" style="margin: 0 auto;">
+						<p:outputLabel value="Deseja sair do Imobby?" />
+					</p:panelGrid>
+					<p:panelGrid columns="2" style="margin: 0 auto;">
+						<p:commandButton value="Sim" action="#{login.logout}"
+							iconPos="left" icon="check"
+							oncomplete="menuFinanceiroWgtLogOut.hide();" />
+						<p:commandButton value="Nao" iconPos="left" icon="delete"
+							onclick="menuFinanceiroWgtLogOut.hide();" />
+					</p:panelGrid>
+
+				</p:dialog>
+				<p:panelGrid columns="1" style="margin: 0 auto;">
+					<h:graphicImage library="imagens" height="30" width="30"
+						name="logout.png" onclick="menuFinanceiroWgtLogOut.show();" />
+				</p:panelGrid>
+			</pm:footer>
+		</pm:view>
+	</ui:composition>
+</f:view>

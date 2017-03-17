@@ -1,0 +1,24 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	contentType="text/html" renderKitId="PRIMEFACES_MOBILE">
+
+	<!-- MODULO FINANCEIRO -->
+	<ui:composition>
+
+		<!-- TAB DE RESUMO -->
+		<ui:include src="/paginas/financeiro/saldoClientes/tabResumo.xhtml" />
+
+		<!-- TAB DE GRAFICOS -->
+		<ui:include src="/paginas/financeiro/saldoClientes/tabGraficos.xhtml" />
+		
+		<!-- TAB DE INDICADORES -->
+		<ui:include src="/paginas/financeiro/saldoClientes/tabIndicadores.xhtml" />
+
+	</ui:composition>
+
+</f:view>

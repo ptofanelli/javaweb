@@ -1,0 +1,74 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile" contentType="text/html"
+	renderKitId="PRIMEFACES_MOBILE">
+
+	<pm:page id="pageLogin" title="#{msg.loginPageTitle}">	
+		<!-- Main View -->
+		<pm:view id="loginView" swatch="b" title="#{msg.loginViewTitle}">
+			<pm:header title="#{msg.loginHeaderTitle}" swatch="b" fixed="true">
+				<f:facet name="right">
+					<h:form id="headerForm">
+						<p:commandButton id="btnInfo" value="#{msg.loginBtnLeft}"
+							iconPos="left" icon="info" action="sobre" />
+					</h:form>
+				</f:facet>
+			</pm:header>
+
+			<pm:content>
+				<h:form id="mainForm">
+					<p:panelGrid columns="1" style="margin: 0 auto;">
+						<h:graphicImage id="logoImobby" library="imagens" name="logo.png" />
+					</p:panelGrid>
+
+
+					<p:messages id="messages" globalOnly="true" showDetail="true"
+						autoUpdate="true" closable="true" />
+
+					<h:outputLabel for="usuario" value="#{msg.loginLblUsuario}"
+						style="font-weight:bold" />
+					<p:message id="usuarioMensagem" for="usuario" />
+					<p:inputText id="usuario" value="#{login.usuario}" required="true"
+						requiredMessage="#{msg.loginMsgUsuario}" />
+
+					<h:outputLabel for="senha" value="#{msg.loginLblSenha}"
+						style="font-weight:bold" />
+					<p:message id="senhaMensagem" for="senha" />
+					<p:password id="senha" value="#{login.senha}" required="true"
+						requiredMessage="#{msg.loginMsgSenha}" />
+
+					<p:commandButton value="#{msg.loginBtnEntrar}" iconPos="noicon"
+						action="#{login.login()}" update="mainForm"/>
+				</h:form>
+
+				<h:form id="formLang">
+					<p:panelGrid columns="3" style="margin: 0 auto;">
+						<p:commandLink action="#{login.setIdiomaPt}"
+							update=":headerForm,:mainForm">
+							<h:graphicImage library="imagens" height="50" width="50"
+								name="brazil-flag-icon.png" onclick="" />
+						</p:commandLink>
+						<p:commandLink action="#{login.setIdiomaEn}"
+							update=":headerForm,:mainForm">
+							<h:graphicImage library="imagens" height="50" width="50"
+								name="usa-flag-icon.png" onclick="" />
+						</p:commandLink>
+						<p:commandLink action="#{login.setIdiomaEs}"
+							update=":headerForm,:mainForm">
+							<h:graphicImage library="imagens" height="50" width="50"
+								name="spain-flag-icon.png" onclick="" />
+						</p:commandLink>
+					</p:panelGrid>
+				</h:form>
+			</pm:content>
+			<pm:footer fixed="true" swatch="b">
+			Imobby &#169; 2013 i9Virtual
+			</pm:footer>
+
+		</pm:view>
+
+	</pm:page>
+</f:view>

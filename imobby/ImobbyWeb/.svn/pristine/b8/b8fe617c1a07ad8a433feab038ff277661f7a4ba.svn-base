@@ -1,0 +1,37 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	contentType="text/html" renderKitId="PRIMEFACES_MOBILE">
+
+	<!-- RODAPE PRINCIPAL -->
+	<ui:composition>
+
+		<p:dialog id="dlgLogOut" header="Sair" widgetVar="wgtLogOut"
+			showEffect="fade" hideEffect="fade" closable="false" modal="true"
+			height="100">
+			<p:panelGrid columns="1" style="margin: 0 auto;">
+				<p:outputLabel value="Deseja sair do Imobby?" />
+			</p:panelGrid>
+			<p:panelGrid columns="2" style="margin: 0 auto;">
+				<p:commandButton value="Sim" action="#{login.logout}" iconPos="left"
+					icon="check" oncomplete="wgtLogOut.hide();" />
+				<p:commandButton value="Nao" iconPos="left" icon="delete"
+					onclick="wgtLogOut.hide();" />
+			</p:panelGrid>
+
+		</p:dialog>
+
+		<p:panelGrid columns="3" style="margin: 0 auto;">
+			<h:graphicImage library="imagens" height="30" width="30"
+				name="logout.png" onclick="wgtLogOut.show();" />
+			<p:outputLabel value="#{login.usuario}" />
+			<p:outputLabel value=" - #{msg.copyright}" />
+		</p:panelGrid>
+
+	</ui:composition>
+
+</f:view>

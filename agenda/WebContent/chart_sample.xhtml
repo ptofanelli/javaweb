@@ -1,0 +1,22 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:wc="http://googlecode.com/wickedcharts"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<f:view>
+	<h:head>
+		<!--         <script -->
+		<!--             src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" -->
+		<!--             type="text/javascript"></script> -->
+		<script type="text/javascript" src="resources/js/jquery-2.1.3.js" />
+		<script type="text/javascript" src="http://code.highcharts.com/modules/exporting.js" />
+		<script type="text/javascript" src="http://code.highcharts.com/highcharts.js" />
+
+	</h:head>
+	<h:body>
+<!-- 		<script src="http://code.highcharts.com/highcharts.js" -->
+<!-- 			type="text/javascript"></script> -->
+		<wc:chart id="chart1" options="#{bean.options}" />
+	</h:body>
+</f:view>
+</html>

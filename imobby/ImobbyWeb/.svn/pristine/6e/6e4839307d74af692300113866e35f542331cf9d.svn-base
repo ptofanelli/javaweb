@@ -1,0 +1,54 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	contentType="text/html" renderKitId="PRIMEFACES_MOBILE">
+
+	<!-- FILTRO DOS DADOS DO FINANCEIRO -->
+	<ui:composition>
+		<pm:view id="viewFinanceiroFiltro" swatch="b">
+			<pm:header title="Financeiro - Filtros" fixed="true" swatch="b">
+				<f:facet name="left">
+					<p:commandButton value="Voltar" iconPos="left" icon="back"
+						action="pm:viewFinanceiroResumo?reverse=true" />
+				</f:facet>
+			</pm:header>
+			<pm:content>
+				<h:form id="formFinanceiroFiltro">
+					<p:outputLabel value="Quantidade de maiores saldos" />
+					<p:inputMask mask="[0-9]*" maxlength="3" placeHolder=" " value="#{saldoClienteController.quantidadeMaioresSaldos}" required="true"/>
+					<p:commandButton value="Aplicar" iconPos="left" icon="back"
+						update=":formFinanceiro:accFinanceiro"
+						action="pm:viewFinanceiroResumo?reverse=true,transition=slide"
+						actionListener="#{saldoClienteController.atualizar}" />
+
+				</h:form>
+			</pm:content>
+			<pm:footer fixed="true" swatch="b">
+				<p:dialog id="filtroDlgLogOut" header="Sair" widgetVar="filtroWgtLogOut"
+					showEffect="fade" hideEffect="fade" closable="false" modal="true"
+					height="100">
+					<p:panelGrid columns="1" style="margin: 0 auto;">
+						<p:outputLabel value="Deseja sair do Imobby?" />
+					</p:panelGrid>
+					<p:panelGrid columns="2" style="margin: 0 auto;">
+						<p:commandButton value="Sim" action="#{login.logout}"
+							iconPos="left" icon="check" oncomplete="filtroWgtLogOut.hide();" />
+						<p:commandButton value="Nao" iconPos="left" icon="delete"
+							onclick="filtroWgtLogOut.hide();" />
+					</p:panelGrid>
+
+				</p:dialog>
+
+				<p:panelGrid columns="1" style="margin: 0 auto;">
+					<h:graphicImage library="imagens" height="30" width="30"
+						name="logout.png" onclick="filtroWgtLogOut.show();" />
+				</p:panelGrid>
+			</pm:footer>
+		</pm:view>
+	</ui:composition>
+
+</f:view>

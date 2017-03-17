@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:wc="http://googlecode.com/wickedcharts">
+
+<f:view renderKitId="PRIMEFACES_MOBILE">
+
+	<h:head>
+		<script type="text/javascript" src="resources/js/jquery-2.1.3.js" />
+		<script type="text/javascript"
+			src="http://code.highcharts.com/modules/exporting.js" />
+		<script type="text/javascript"
+			src="http://code.highcharts.com/highcharts.js" />
+	</h:head>
+
+	<h:body>
+		<pm:page>
+			<pm:header fixed="true" title="Web Vendas Login">
+				<p:button type="button" outcome="index?faces-redirect=true"
+					icon="ui-icon-back" />
+			</pm:header>
+
+			<pm:content>
+				<p:panel toggleable="true" toggleTitle="Desempenho de vendas">
+					<wc:chart id="chart1" options="#{bean.options}" />
+				</p:panel>
+			</pm:content>
+
+			<pm:footer fixed="true">
+				<p:panelGrid columns="1" style="display:block; text-align:center;">
+					<p:button icon="ui-icon-home" outcome="index"/>
+				</p:panelGrid>
+			</pm:footer>
+		</pm:page>
+	</h:body>
+
+</f:view>
+
+</html>

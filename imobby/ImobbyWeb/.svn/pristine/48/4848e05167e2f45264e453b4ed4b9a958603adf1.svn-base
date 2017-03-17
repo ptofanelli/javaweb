@@ -1,0 +1,80 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	contentType="text/html" renderKitId="PRIMEFACES_MOBILE">
+
+	<!-- MODULO FINANCEIRO - TAB DE GRAFICOS -->
+	<ui:composition>
+		<pm:view id="viewFinanceiroGraficos">
+			<pm:header title="Financeiro" fixed="true" swatch="b">
+				<f:facet name="left">
+					<p:commandButton value="Financeiro" iconPos="left" icon="back"
+						action="pm:viewMenuFinanceiro?reverse=true" />
+				</f:facet>
+
+				<f:facet name="right">
+					<p:commandButton value="Filtro" iconPos="left" icon="search" />
+				</f:facet>
+
+				<pm:navBar>
+					<p:button value="Resumo" icon="home" href="#viewFinanceiroResumo"/>
+					<p:button value="Graficos" icon="info"
+						href="#viewFinanceiroGraficos" styleClass="ui-btn-active" />
+					<p:button value="Indicadores" icon="star"
+						href="#viewFinanceiroIndicadores" />
+				</pm:navBar>
+			</pm:header>
+			<pm:content>
+				<h:form id="saldoClientesTabGraficosForm">
+					<p:accordionPanel>
+						<p:tab title="Saldo">
+							<p:panelGrid columns="1" height="150" style="margin: 0 auto;">
+								<p:graphicImage value="#{saldoClienteController.graficoSaldoEmAtraso}" />
+								<br />
+							</p:panelGrid>
+							<p:dataList id="dlSomaSaldo">
+								<h:outputText
+									value="#{saldoClienteController.posicaoAtualContasReceber.saldo}">
+									<f:convertNumber pattern="Total: R$ #,##0.00" />
+								</h:outputText>
+								<h:outputText
+									value="#{saldoClienteController.posicaoAtualContasReceber.saldoEmAtraso}">
+									<f:convertNumber pattern="Total em atraso: R$ #,##0.00" />
+								</h:outputText>
+							</p:dataList>
+						</p:tab>
+						<p:tab title="Codigo do Relatorio">
+							<p:graphicImage value="#{dynamicImageController.barcode}" />
+						</p:tab>
+					</p:accordionPanel>
+				</h:form>
+			</pm:content>
+			<pm:footer fixed="true" swatch="b">
+				<p:dialog id="tabGraficosDlgLogOut" header="Sair" widgetVar="tabGraficosWgtLogOut"
+					showEffect="fade" hideEffect="fade" closable="false" modal="true"
+					height="100">
+					<p:panelGrid columns="1" style="margin: 0 auto;">
+						<p:outputLabel value="Deseja sair do Imobby?" />
+					</p:panelGrid>
+					<p:panelGrid columns="2" style="margin: 0 auto;">
+						<p:commandButton value="Sim" action="#{login.logout}"
+							iconPos="left" icon="check" oncomplete="tabGraficosWgtLogOut.hide();" />
+						<p:commandButton value="Nao" iconPos="left" icon="delete"
+							onclick="tabGraficosWgtLogOut.hide();" />
+					</p:panelGrid>
+
+				</p:dialog>
+
+				<p:panelGrid columns="1" style="margin: 0 auto;">
+					<h:graphicImage library="imagens" height="30" width="30"
+						name="logout.png" onclick="tabGraficosWgtLogOut.show();" />
+				</p:panelGrid>
+			</pm:footer>
+		</pm:view>
+	</ui:composition>
+
+</f:view>

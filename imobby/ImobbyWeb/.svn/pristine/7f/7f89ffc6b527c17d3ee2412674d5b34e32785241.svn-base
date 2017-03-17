@@ -1,0 +1,218 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	contentType="text/html" renderKitId="PRIMEFACES_MOBILE">
+
+	<!-- MODULO FINANCEIRO - TAB DE RESUMO -->
+	<ui:composition>
+		<pm:view id="viewFinanceiroResumo">
+			<pm:header title="Financeiro" fixed="true" swatch="b">
+
+				<f:facet name="left">
+					<p:commandButton value="Financeiro" iconPos="left" icon="back"
+						action="pm:viewMenuFinanceiro?reverse=true" />
+				</f:facet>
+				<f:facet name="right">
+					<p:commandButton value="Filtro" iconPos="left" icon="search"
+						action="pm:viewFinanceiroFiltro" />
+					<!-- 					<p:commandButton value="Filtro" iconPos="left" icon="search" onclick="wgtFinDlgFiltro.show();" /> -->
+				</f:facet>
+
+				<pm:navBar>
+					<p:button value="Resumo" icon="home" href="#viewFinanceiroResumo"
+						styleClass="ui-btn-active"
+						widgetVar="saldoClienteTabResumoWgtBtnResumo" />
+					<p:button value="Graficos" icon="info"
+						href="#viewFinanceiroGraficos" />
+					<p:button value="Indicadores" icon="star"
+						href="#viewFinanceiroIndicadores" />
+				</pm:navBar>
+			</pm:header>
+			<pm:content>
+				<!-- DIALOG DE FILTRO -->
+				<h:form id="finFormDlgFiltro">
+					<p:dialog id="finDlgFiltro" header="Info"
+						widgetVar="wgtFinDlgFiltro" showEffect="fade" hideEffect="fade"
+						closable="false" modal="true" height="100">
+						<p:panelGrid columns="2" style="margin: 0 auto;">
+							<p:outputLabel value="Qnt. Maiores Saldos" />
+							<p:inputText id="finDlgFiltroInputQntMaioresSaldos"
+								value="#{saldoClienteController.quantidadeMaioresSaldos}"
+								required="true">
+								<f:converter converterId="javax.faces.Integer" />
+							</p:inputText>
+						</p:panelGrid>
+						<p:commandButton
+							process="finDlgFiltroInputQntMaioresSaldos, @this" value="Fechar"
+							iconPos="left" icon="check"
+							update="finDlgFiltroInputQntMaioresSaldos,:formFinanceiro:accFinanceiro"
+							action="pm:viewFinanceiroResumo?transition=fade"
+							actionListener="#{saldoClienteController.atualizar}"
+							oncomplete="wgtFinDlgFiltro.hide();" />
+					</p:dialog>
+				</h:form>
+
+				<!-- DIALOG DE INFORMACOES DO CLIENTE -->
+				<h:form id="finFormDlgClienteDetalhe">
+					<p:dialog id="finDlgClienteDetalhe" header="Info"
+						widgetVar="wgtFinDlgClienteDetalhe" showEffect="fade"
+						hideEffect="fade" closable="false" modal="true" height="100">
+
+						<p:dataList id="finDlgClienteDetalheDataList">
+							<p:outputLabel
+								value="#{saldoClienteController.saldoClienteSelecionado.entidadeObj.nome}" />
+							<p:outputLabel
+								value="#{saldoClienteController.saldoClienteSelecionado.entidadeObj.telefone}"
+								rendered="#{not empty saldoClienteController.saldoClienteSelecionado.entidadeObj.telefone}" />
+							<p:outputLabel
+								value="#{saldoClienteController.saldoClienteSelecionado.entidadeObj.email}"
+								rendered="#{not empty saldoClienteController.saldoClienteSelecionado.entidadeObj.email}" />
+						</p:dataList>
+						<p:commandButton value="Fechar" iconPos="left" icon="check"
+							onclick="wgtFinDlgClienteDetalhe.hide();" />
+					</p:dialog>
+				</h:form>
+
+				<!-- PAINEIS -->
+				<h:form id="formFinanceiro">
+					<p:accordionPanel id="accFinanceiro" dynamic="true"
+						multiple="false">
+						<p:tab id="tabMaioresSaldos"
+							title="Maiores Saldos (#{saldoClienteController.quantidadeMaioresSaldos})">
+							<p:dataList id="dataListMaioresSaldos"
+								value="#{saldoClienteController.maioresSaldos}" var="saldo">
+								<p:commandLink process="@this"
+									update=":finFormDlgClienteDetalhe:finDlgClienteDetalheDataList"
+									oncomplete="wgtFinDlgClienteDetalhe.show();">
+									<f:setPropertyActionListener value="#{saldo}"
+										target="#{saldoClienteController.saldoClienteSelecionado}" />
+									<f:attribute name="icon" value="info" />
+									<h6>
+										<h:outputText value="#{saldo.entidadeObj.nome}" />
+									</h6>
+									<p>
+										<strong> <h:outputText value="#{saldo.saldo}">
+												<f:convertNumber pattern="R$ #,##0.00" />
+											</h:outputText>
+										</strong>
+									</p>
+									<p>
+										<strong> <h:outputText value="#{saldo.saldoEmAtraso}"
+												style="color: #FF0000;">
+												<f:convertNumber pattern="R$ #,##0.00" />
+											</h:outputText>
+										</strong>
+									</p>
+								</p:commandLink>
+							</p:dataList>
+						</p:tab>
+						<p:tab title="Menor Saldo">
+							<p:dataList styleClass="ui-li-custom">
+								<f:attribute name="icon" value="false" />
+								<h:outputText
+									value="Nome: #{saldoClienteController.resumoSaldoCliente.menorSaldoCliente.entidadeObj.nome}" />
+								<h:outputText
+									value="Tel.: #{saldoClienteController.resumoSaldoCliente.menorSaldoCliente.entidadeObj.telefone}" />
+								<h:outputText
+									value="Email: #{saldoClienteController.resumoSaldoCliente.menorSaldoCliente.entidadeObj.email}" />
+								<h:outputText
+									value="#{saldoClienteController.resumoSaldoCliente.menorSaldoCliente.saldo}">
+									<f:convertNumber pattern="Saldo: R$ #,##0.00" />
+								</h:outputText>
+								<h:outputText
+									value="#{saldoClienteController.resumoSaldoCliente.menorSaldoCliente.saldoEmAtraso}">
+									<f:convertNumber pattern="Em atraso: R$ #,##0.00" />
+								</h:outputText>
+							</p:dataList>
+						</p:tab>
+						<p:tab title="Maior Saldo">
+							<p:dataList styleClass="ui-li-custom">
+								<f:attribute name="icon" value="false" />
+								<h:outputText
+									value="Nome: #{saldoClienteController.resumoSaldoCliente.maiorSaldoCliente.entidadeObj.nome}" />
+								<h:outputText
+									value="Tel.: #{saldoClienteController.resumoSaldoCliente.maiorSaldoCliente.entidadeObj.telefone}" />
+								<h:outputText
+									value="Email: #{saldoClienteController.resumoSaldoCliente.maiorSaldoCliente.entidadeObj.email}" />
+								<h:outputText
+									value="#{saldoClienteController.resumoSaldoCliente.maiorSaldoCliente.saldo}">
+									<f:convertNumber pattern="Saldo: R$ #,##0.00" />
+								</h:outputText>
+								<h:outputText
+									value="#{saldoClienteController.resumoSaldoCliente.maiorSaldoCliente.saldoEmAtraso}">
+									<f:convertNumber pattern="Em atraso: R$ #,##0.00" />
+								</h:outputText>
+							</p:dataList>
+						</p:tab>
+
+						<p:tab title="Menor Saldo Em Atraso">
+							<p:dataList styleClass="ui-li-custom">
+								<f:attribute name="icon" value="false" />
+								<h:outputText
+									value="Nome: #{saldoClienteController.resumoSaldoCliente.menorSaldoClienteAtrasado.entidadeObj.nome}" />
+								<h:outputText
+									value="Tel.: #{saldoClienteController.resumoSaldoCliente.menorSaldoClienteAtrasado.entidadeObj.telefone}" />
+								<h:outputText
+									value="Email: #{saldoClienteController.resumoSaldoCliente.menorSaldoClienteAtrasado.entidadeObj.email}" />
+								<h:outputText
+									value="#{saldoClienteController.resumoSaldoCliente.menorSaldoClienteAtrasado.saldo}">
+									<f:convertNumber pattern="Saldo: R$ #,##0.00" />
+								</h:outputText>
+								<h:outputText
+									value="#{saldoClienteController.resumoSaldoCliente.menorSaldoClienteAtrasado.saldoEmAtraso}">
+									<f:convertNumber pattern="Em atraso: R$ #,##0.00" />
+								</h:outputText>
+							</p:dataList>
+						</p:tab>
+
+						<p:tab title="Maior Saldo Em Atraso">
+							<p:dataList styleClass="ui-li-custom">
+								<f:attribute name="icon" value="false" />
+								<h:outputText
+									value="Nome: #{saldoClienteController.resumoSaldoCliente.maiorSaldoClienteAtrasado.entidadeObj.nome}" />
+								<h:outputText
+									value="Tel.: #{saldoClienteController.resumoSaldoCliente.maiorSaldoClienteAtrasado.entidadeObj.telefone}" />
+								<h:outputText
+									value="Email: #{saldoClienteController.resumoSaldoCliente.maiorSaldoClienteAtrasado.entidadeObj.email}" />
+								<h:outputText
+									value="#{saldoClienteController.resumoSaldoCliente.maiorSaldoClienteAtrasado.saldo}">
+									<f:convertNumber pattern="Saldo: R$ #,##0.00" />
+								</h:outputText>
+								<h:outputText
+									value="#{saldoClienteController.resumoSaldoCliente.maiorSaldoClienteAtrasado.saldoEmAtraso}">
+									<f:convertNumber pattern="Em atraso: R$ #,##0.00" />
+								</h:outputText>
+							</p:dataList>
+						</p:tab>
+					</p:accordionPanel>
+				</h:form>
+			</pm:content>
+			<pm:footer fixed="true" swatch="b">
+				<p:dialog id="tabResumoDlgLogOut" header="Sair"
+					widgetVar="tabResumoWgtLogOut" showEffect="fade" hideEffect="fade"
+					closable="false" modal="true" height="100">
+					<p:panelGrid columns="1" style="margin: 0 auto;">
+						<p:outputLabel value="Deseja sair do Imobby?" />
+					</p:panelGrid>
+					<p:panelGrid columns="2" style="margin: 0 auto;">
+						<p:commandButton value="Sim" action="#{login.logout}"
+							iconPos="left" icon="check"
+							oncomplete="tabResumoWgtLogOut.hide();" />
+						<p:commandButton value="Nao" iconPos="left" icon="delete"
+							onclick="tabResumoWgtLogOut.hide();" />
+					</p:panelGrid>
+
+				</p:dialog>
+				<p:panelGrid columns="1" style="margin: 0 auto;">
+					<h:graphicImage library="imagens" height="30" width="30"
+						name="logout.png" onclick="tabResumoWgtLogOut.show();" />
+				</p:panelGrid>
+			</pm:footer>
+		</pm:view>
+	</ui:composition>
+
+</f:view>
